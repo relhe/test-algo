@@ -1,3 +1,4 @@
+import random
 # Quicksort algorithm implementation in Python.
 
 def quick_sort(number_list:list)->list:
@@ -26,7 +27,6 @@ def quick_sort(number_list:list)->list:
 # space complexity O(n)
 
 if __name__ == "__main__":
-    import random
     random_list = [random.randint(0, 100) for _ in range(20)]
     print("Unsorted list:")
     print(random_list)
