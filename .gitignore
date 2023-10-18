@@ -19,9 +19,8 @@ lib/
 local/
 pip-wheel-metadata/
 share/
-vscode/
+.vscode/
 .vscode/*
 coverage/
 coverage/*
-env/
 env/*
