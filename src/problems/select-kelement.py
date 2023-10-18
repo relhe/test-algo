@@ -15,14 +15,16 @@ def select_kth_element_group_five(number_list: list, kth_element: int)->int:
     # if the position is greater than k, repeat the process on the left sublist
     # if the position is less than k, repeat the process on the right sublist
     list_of_groups = []
+    import math
+
     for i in range(0, len(number_list), 5):
         list_of_groups.append(number_list[i:i+5])
     for group in list_of_groups:
-        group.sort()
+        group = sorted(group)
     median_list = []
     for group in list_of_groups:
-        median_list.append(group[len(group)//2])
-    median_of_medians = median_list[len(median_list)//2]
+        median_list.append(group[math.ceil(len(group)/2)-1])
+    median_of_medians = median_list[math.ceil(len(median_list)/2)-1]
     left = []
     right = []
     for number in number_list:
@@ -90,15 +92,15 @@ def select_kth_element_brute_force(number_list: list, kth_element: int)->int:
     This function takes a list of numbers and returns the kth smallest element using brute force sorting.
     """
     # qs.quicksort_inplace(number_list)
-    number_list.sort()
-    return number_list[kth_element - 1]
+    num = sorted(number_list)
+    return num[kth_element - 1]
 
 if __name__ == "__main__":
     # generate a list of 1500 number with secrets module
-    number_list = [secrets.randbelow(150) for _ in range(70)]
+    number_list = [secrets.randbelow(23500000000) for _ in range(1000000)]
     kth_element = 10
     # measure the time taken by the function execution
-    # print(number_list)
+    print(sorted(number_list))
     print("\n")
     start_time = time.time()
     print("kth smallest element using quick select: ", select_kth_element(number_list, kth_element))
