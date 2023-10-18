@@ -2,7 +2,40 @@ import heapq
 import time
 import secrets
 
-import sort.quicksort as qs
+# import sort.quicksort as qs
+
+def select_kth_element_group_five(number_list: list, kth_element: int)->int:
+    # divide the list into groups of five
+    # sort each group
+    # find the median of each group
+    # find the median of medians
+    # partition the list around median of medians
+    # find the position of the median of medians in the list
+    # if the position is equal to k, return the element
+    # if the position is greater than k, repeat the process on the left sublist
+    # if the position is less than k, repeat the process on the right sublist
+    list_of_groups = []
+    for i in range(0, len(number_list), 5):
+        list_of_groups.append(number_list[i:i+5])
+    for group in list_of_groups:
+        group.sort()
+    median_list = []
+    for group in list_of_groups:
+        median_list.append(group[len(group)//2])
+    median_of_medians = median_list[len(median_list)//2]
+    left = []
+    right = []
+    for number in number_list:
+        if number < median_of_medians:
+            left.append(number)
+        else:
+            right.append(number)
+    if len(left) == kth_element - 1:
+        return median_of_medians
+    elif len(left) > kth_element - 1:
+        return select_kth_element_group_five(left, kth_element)
+    else:
+        return select_kth_element_group_five(right, kth_element - len(left) - 1)
 
 # select kth element from an array
 def select_kth_element(number_list: list, kth_element: int)->int:
@@ -56,13 +89,14 @@ def select_kth_element_brute_force(number_list: list, kth_element: int)->int:
     """
     This function takes a list of numbers and returns the kth smallest element using brute force sorting.
     """
-    qs.quicksort_inplace(number_list)
+    # qs.quicksort_inplace(number_list)
+    number_list.sort()
     return number_list[kth_element - 1]
 
 if __name__ == "__main__":
     # generate a list of 1500 number with secrets module
-    number_list = [secrets.randbelow(150000000) for _ in range(1500000)]
-    kth_element = 10000
+    number_list = [secrets.randbelow(150) for _ in range(70)]
+    kth_element = 10
     # measure the time taken by the function execution
     # print(number_list)
     print("\n")
@@ -75,3 +109,6 @@ if __name__ == "__main__":
     start_time = time.time()
     print("kth smallest element using brute force: ", select_kth_element_brute_force(number_list, kth_element))
     print("Time taken by select with brute force sorting: ", time.time() - start_time)
+    start_time = time.time()
+    print("kth smallest element using group of five: ", select_kth_element_group_five(number_list, kth_element))
+    print("Time taken by select with group of five: ", time.time() - start_time)
