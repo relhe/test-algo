@@ -1,6 +1,37 @@
 import random
 # Quicksort algorithm implementation in Python.
 
+# quicksort without using extra space
+def quicksort_inplace(number_list:list, low:int, high:int)->None:
+    """Sorts a list of numbers using the quick sort algorithm.
+    Args:
+        number_list (list): List of numbers to sort.
+        low (int): Starting index of the list.
+        high (int): Ending index of the list.
+    """
+    if low < high:
+        pivot = partition(number_list, low, high)
+        quicksort_inplace(number_list, low, pivot - 1)
+        quicksort_inplace(number_list, pivot + 1, high)
+
+def partition(number_list:list, low:int, high:int)->int:
+    """Partitions the list around a pivot.
+    Args:
+        number_list (list): List of numbers to sort.
+        low (int): Starting index of the list.
+        high (int): Ending index of the list.
+    Returns:
+        int: The index of the pivot.
+    """
+    pivot = number_list[high]
+    i = low - 1
+    for j in range(low, high):
+        if number_list[j] < pivot:
+            i += 1
+            number_list[i], number_list[j] = number_list[j], number_list[i]
+    number_list[i + 1], number_list[high] = number_list[high], number_list[i + 1]
+    return i + 1
+
 def quick_sort(number_list:list)->list:
     """Sorts a list of numbers using the quick sort algorithm.
     Args:
@@ -32,3 +63,9 @@ if __name__ == "__main__":
     print(random_list)
     print("Sorted list:")
     print(quick_sort(random_list))
+    print("quicksort inplace")
+    print("Unsorted list:")
+    print(random_list)
+    quicksort_inplace(random_list, 0, len(random_list) - 1)
+    print("Sorted list:")
+    print(random_list)
