@@ -2,7 +2,6 @@ import heapq
 import time
 import secrets
 
-# import sort.quicksort as qs
 
 def select_kth_element_group_five(number_list: list, kth_element: int)->int:
     # divide the list into groups of five
